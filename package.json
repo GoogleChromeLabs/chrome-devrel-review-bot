@@ -1,0 +1,27 @@
+{
+  "name": "web-dev-hello-express",
+  "version": "1.0.0",
+  "description": "A web.dev template for an express app.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@octokit/core": "3.2.4",
+    "axios": "0.21.0",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "markdownlint": "0.21.1",
+    "puppeteer": "5.4.1"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/web-dev-hello-express"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "nodemon": "2.0.6"
+  }
+}
