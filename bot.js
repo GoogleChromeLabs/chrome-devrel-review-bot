@@ -1,6 +1,3 @@
-// The bot that acts on my behalf
-// Need to create a single comment, detect that comment, update
-
 const axios = require('axios');
 // https://github.com/octokit/core.js#readme
 const { Octokit } = require('@octokit/core');

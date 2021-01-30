@@ -1,6 +1,3 @@
-// Copyright 2018 Google LLC.
-// SPDX-License-Identifier: Apache-2.0
-
 require('dotenv').config();
 
 const express = require('express');
@@ -15,12 +12,9 @@ const {actions, audit} = require('./bot.js');
 
 app.use(express.json());
 
-// TODO update to only accept traffic from GitHub
-// TODO need to wait for Netlify to redeploy https://docs.netlify.com/api/get-started/#poll-for-deploy-state
 app.post('/', function(request, response) {
   const data = request.body;
   const action = data.action;
-  console.log(`Handling ${action}`);
   if (!actions.hasOwnProperty(action)) {
     response.end();
     return;
@@ -36,5 +30,5 @@ app.get('/', async (request, response) => {
 });
 
 const listener = app.listen(12345, function() {
-  console.log('Your app is listening on port ' + listener.address().port);
+  console.log(`App is running on http://localhost:${listener.address().port}`);
 });

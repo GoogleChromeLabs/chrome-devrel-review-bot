@@ -105,7 +105,6 @@ const audit = async url => {
     for (const item in gather) {
       data[item] = await gather[item](page);
     }
-    console.log({data});
     let output = {};
     for (const audit in audits) {
       output[audit] = await audits[audit](page, data, browser);
