@@ -1,7 +1,14 @@
 const axios = require('axios');
 const linter = require('markdownlint');
-const descriptions = require('./descriptions.json');
-const constants = require('./constants.json');
+
+const interpretations = {
+  "line-length": data => {
+    // TODO
+  },
+  "single-trailing-newline": data => {
+    // TODO
+  }
+};
 
 function organize(data) {
   let output = {};
@@ -13,7 +20,6 @@ function organize(data) {
       };
     }
     output[id].lines.push(violation.lineNumber);
-    output[id].description = descriptions[id];
   });
   return output;
 }
@@ -35,8 +41,10 @@ async function audit(url, filename) {
     }
   };
   options.strings[filename] = data;
-  const results = linter.sync(options);
-  return organize(results[filename]); // change
+  const rawResults = linter.sync(options);
+  const organizedResults = organize(rawResults[filename]);
+  // TODO loop through organizedResults here and pass to interpretations
+  return organizedResults;
 }
 
 module.exports = {

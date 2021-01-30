@@ -4,4 +4,4 @@ function filename(path) {
 
 module.exports = {
   filename
-}
+};

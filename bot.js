@@ -1,13 +1,10 @@
-const axios = require('axios');
 // https://github.com/octokit/core.js#readme
 const { Octokit } = require('@octokit/core');
 const octokit = new Octokit({auth: process.env.GITHUB});
-const markdown = require('./markdown.js');
-const psi = require('./psi.js');
-// const report = require('./report.js');
 const constants = require('./constants.json');
-// const descriptions = require('./descriptions.json');
-const dom = require('./dom.js');
+const markdown = require('./audits/markdown.js');
+const psi = require('./audits/psi.js');
+const dom = require('./audits/dom.js');
 
 const url = (number, path) => {
   const s1 = path.substring(0, path.lastIndexOf('/'));
@@ -33,6 +30,8 @@ const createStagingUrlsComment = data => {
   return comment;
 };
 
+// The keys of this object match the names of the relevant GitHub webhook event
+// that we're responding to.
 const actions = {
   // On this one we can kick off the source code auditing but
   // not the staged site auditing, because Netlify isn't ready yet.
@@ -40,12 +39,7 @@ const actions = {
   // audit() should be renamed to scrape()?
   opened: async data => {
     audit(data.number);
-    // const url =
-    //     `https://api.github.com/repos/googlechrome/web.dev/pulls/${data.number}/files`;
-    // const pr = await axios.get(url);
-    // audit(null);
   },
-  // https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/webhook-events-and-payloads#issue_comment
   created: data => {
     audit(data.issue.number);
   },
@@ -55,42 +49,14 @@ const actions = {
   synchronize: data => {
     audit(data.number);
   }
-}
+};
 
-// <!-- markdownlint-disable-next-line MD001 MD005 -->
 const audit = async number => {
-  number = 4363; // DEBUG
+  // Store data about the pull request.
   let data = {
     files: {},
     number
-  };
-  // const data = {
-  //   files: {
-  //     added: [],
-  //     modified: []
-  //   },
-  //   status: {
-  //     staging: false
-  //   },
-  //   staging: null,
-  //   number
-  // };
-  
-  const beta = [
-    'kaycebasques'
-  ];
-  // Get general PR data
-  const pr = await octokit.request({
-    accept: 'application/vnd.github.v3+json',
-    method: 'GET',
-    url: `/repos/googlechrome/web.dev/pulls/${number}`
-  });
-  // Bail if the author isn't part of our beta program.
-  if (!beta.includes(pr.data.user.login)) return;
-
-  
-  
-
+  };  
   // Get the files that are affected by the pull request.
   const files = await octokit.request({
     method: 'GET',
@@ -98,21 +64,22 @@ const audit = async number => {
   });
   // Check for new content, modified content, or images.
   const newContent =
-      files.data.filter(file => file.status === 'added' &&
+      files.data.filter(file => file.status === constants.files.added &&
           file.filename.toLowerCase().endsWith('.md'));
   const modifiedContent =
-      files.data.filter(file => file.status === 'modified' &&
+      files.data.filter(file => file.status === constants.files.modified &&
           file.filename.toLowerCase().endsWith('.md'));
   const images =
       files.data.filter(file => file.filename.toLowerCase().endsWith('.png') ||
           file.filename.toLowerCase().endsWith('.jpg'));
   // Bail if the PR doesn't touch any content files.
+  // TODO(kaycebasques): What about images?
   if (newContent.length === 0 && modifiedContent.length === 0) return;
   // Store data about the new or modified content.
   if (newContent.length > 0) {
     newContent.forEach(file => {
       data.files[file.filename] = {
-        status: 'added', // TODO(kaycebasques): Move to constants.json?
+        status: constants.files.added,
         url: url(number, file.filename),
         raw: file.raw_url,
         audits: {}
@@ -122,7 +89,7 @@ const audit = async number => {
   if (modifiedContent.length > 0) {
     modifiedContent.forEach(file => {
       data.files[file.filename] = {
-        status: 'modified', // TODO(kaycebasques): Move to constants.json?
+        status: constants.files.modified,
         url: url(number, file.filename),
         raw: file.raw_url,
         audits: {}
@@ -134,8 +101,8 @@ const audit = async number => {
   for (const path in data.files) {
     const file = data.files[path];
     file.audits.markdown = await markdown.audit(file.raw, path);
-    file.audits.psi = await psi.audit(file.url);
-    file.audits.dom = await dom.audit(file.url);
+    // file.audits.psi = await psi.audit(file.url);
+    // file.audits.dom = await dom.audit(file.url);
   }
 
   // Get the comments on the pull request.
@@ -178,10 +145,6 @@ const audit = async number => {
   // });
 
   return createReviewComment(data);
-  
-  // https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}
-  
-
 };
 
 module.exports = {

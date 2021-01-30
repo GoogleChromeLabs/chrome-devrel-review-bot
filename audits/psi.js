@@ -1,6 +1,6 @@
 const axios = require('axios');
-const helpers = require('./helpers.js');
-const descriptions = require('./descriptions.json');
+const helpers = require('../helpers.js');
+const descriptions = require('../descriptions.json');
 
 const handlers = {
   "efficient-animated-content": data => {

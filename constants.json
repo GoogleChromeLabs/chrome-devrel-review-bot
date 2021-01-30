@@ -3,5 +3,9 @@
     "staging": "reviewbot-staging-urls",
     "netlify": "Deploy preview for *web-dev-staging* ready!",
     "review": "reviewbot-pull-request-review"
+  },
+  "files": {
+    "added": "added",
+    "modified": "modified"
   }
 }
