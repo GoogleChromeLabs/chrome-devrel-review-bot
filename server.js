@@ -18,6 +18,10 @@ app.post('/', function(request, response) {
   response.end();
 });
 
+app.get('/', async () => {
+  response.send('OK');
+});
+
 app.get('/:number', async (request, response) => {
   const data = await audit(request.params.number);
   response.header('Content-Type', 'application/json');
