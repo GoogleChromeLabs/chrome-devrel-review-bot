@@ -22,6 +22,8 @@ This section explains the lifecycle of the bot.
    The comment also contains direct links to the new or updates pages
    for the author's convenience.
 1. As the PR is updated, the comment is replaced with new information
-   (rather than creating new comments, which could get spammy).   
+   (rather than creating new comments, which could get spammy). We detect
+   the old comment by looking for a unique string embedded within
+   the comment (it's an HTML comment).
 
 [webhook]: https://docs.github.com/en/developers/webhooks-and-events/about-webhooks

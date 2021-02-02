@@ -127,7 +127,7 @@ const audit = async number => {
       if (sentinel) content += '* This file passed all of our automated Markdown audits.\n\n';
       return content;
     };
-    let comment = 'Hello! This is an automated review. It updates automatically when code or GitHub comments in this pull request are created or updated.\n\n';
+    let comment = 'Hello! This is an automated review by our custom [reviewbot](https://github.com/kaycebasques/reviewbot). It updates automatically when code or GitHub comments in this pull request are created or updated.\n\n';
     if (showStagingUrls) comment += createStagingUrlsContent(data);
     comment += '## Requested changes\n\n';
     comment += 'If there are any common problems with the content files you created or modified, they will be listed here.\n\n';
