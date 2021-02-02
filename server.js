@@ -13,7 +13,7 @@ app.post('/', function(request, response) {
     response.end();
     return;
   }
-  // actions[action](data, response);
+  actions[action](data);
   console.log(data);
   response.end();
 });
