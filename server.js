@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -14,6 +14,7 @@ app.post('/', function(request, response) {
     return;
   }
   // actions[action](data, response);
+  console.log(data);
   response.end();
 });
 
