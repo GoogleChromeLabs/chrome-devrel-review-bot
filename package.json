@@ -1,7 +1,7 @@
 {
-  "name": "web-dev-hello-express",
+  "name": "reviewbot",
   "version": "1.0.0",
-  "description": "A web.dev template for an express app.",
+  "description": "Automated reviews of web.dev pull requests.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,10 +16,10 @@
     "puppeteer": "5.4.1"
   },
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/web-dev-hello-express"
+    "url": "https://glitch.com/edit/#!/reviewbot"
   },
   "license": "Apache-2.0",
   "devDependencies": {
