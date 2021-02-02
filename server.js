@@ -29,6 +29,6 @@ app.get('/', async (request, response) => {
 //   response.send(JSON.stringify(data, null, 2));
 // });
 
-const listener = app.listen(2021, function() {
+const listener = app.listen(process.env.PORT, function() {
   console.log(`App is running on http://localhost:${listener.address().port}`);
 });
