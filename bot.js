@@ -97,7 +97,7 @@ const audit = async number => {
   });
   // Check for the auto-generated staging URLs comment.
   const shouldShowStagingUrls =
-      comments.data.filter(comment => comment.body.includes(constants.comments.staging)).length === 1;
+      comments.data.filter(comment => comment.body.includes(constants.comments.staging)).length > 0;
   // Check for the auto-generated reviewbot comment.
   const reviewBotComment = comments.data.filter(comment => {
     return comment.body.includes(constants.comments.reviewbot);
