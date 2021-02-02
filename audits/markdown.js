@@ -1,12 +1,28 @@
 const axios = require('axios');
 const linter = require('markdownlint');
 
-const interpretations = {
+const defaultCheck = data => data.lines === 0;
+
+const results = {
   "line-length": data => {
-    // TODO
+    data.pass = data.lines.length < 10;
+    return data;
   },
   "single-trailing-newline": data => {
-    // TODO
+    data.pass = defaultCheck(data);
+    return data;
+  },
+  "heading-increment": data => {
+    data.pass = defaultCheck(data);
+    return data;
+  },
+  "blanks-around-headings": data => {
+    data.pass = defaultCheck(data);
+    return data;
+  },
+  "fenced-code-language": data => {
+    data.pass = defaultCheck(data);
+    return data;
   }
 };
 
@@ -32,8 +48,7 @@ async function audit(url, filename) {
       default: false,
       MD001: true,
       MD013: {
-        line_length: 100,
-        code_block_line_length: 80
+        line_length: 100
       },
       MD022: true,
       MD040: true,
@@ -41,10 +56,12 @@ async function audit(url, filename) {
     }
   };
   options.strings[filename] = data;
-  const rawResults = linter.sync(options);
-  const organizedResults = organize(rawResults[filename]);
-  // TODO loop through organizedResults here and pass to interpretations
-  return organizedResults;
+  let output = linter.sync(options);
+  output = organize(output[filename]);
+  for (const key in output) {
+    output[key] = results[key](output[key]);
+  }
+  return output;
 }
 
 module.exports = {

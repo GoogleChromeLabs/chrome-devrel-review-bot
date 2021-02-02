@@ -17,10 +17,10 @@ app.post('/', function(request, response) {
   response.end();
 });
 
-app.get('/', async (request, response) => {
-  const data = await audit(4363);
+app.get('/:number', async (request, response) => {
+  const data = await audit(request.params.number);
   response.header('Content-Type', 'application/json');
-  response.send(JSON.stringify({data}, null, 2));
+  response.send(JSON.stringify(data, null, 2));
 });
 
 const listener = app.listen(12345, function() {

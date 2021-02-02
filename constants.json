@@ -1,8 +1,7 @@
 {
   "comments": {
-    "staging": "reviewbot-staging-urls",
-    "netlify": "Deploy preview for *web-dev-staging* ready!",
-    "review": "reviewbot-pull-request-review"
+    "staging": "Deploy preview for *web-dev-staging* ready!",
+    "reviewbot": "reviewbot-automated-comment"
   },
   "files": {
     "added": "added",
