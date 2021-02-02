@@ -18,15 +18,16 @@ app.post('/', function(request, response) {
   response.end();
 });
 
-app.get('/', async () => {
+app.get('/', async (request, response) => {
   response.send('OK');
 });
 
-app.get('/:number', async (request, response) => {
-  const data = await audit(request.params.number);
-  response.header('Content-Type', 'application/json');
-  response.send(JSON.stringify(data, null, 2));
-});
+// TODO(kaycebasques): Only allow this to run while developing.
+// app.get('/:number', async (request, response) => {
+//   const data = await audit(request.params.number);
+//   response.header('Content-Type', 'application/json');
+//   response.send(JSON.stringify(data, null, 2));
+// });
 
 const listener = app.listen(2021, function() {
   console.log(`App is running on http://localhost:${listener.address().port}`);
