@@ -42,6 +42,7 @@ const audit = async number => {
     url: `/repos/googlechrome/web.dev/pulls/${number}/files`
   });
   // Check for new content, modified content, or images.
+  // TODO(kaycebasques): Refactor to first gather content files. Then filter for modified or added.
   const newContent =
       files.data.filter(file => file.status === constants.files.added &&
           file.filename.toLowerCase().endsWith('.md'));
