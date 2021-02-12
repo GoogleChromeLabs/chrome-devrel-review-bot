@@ -30,27 +30,34 @@ const actions = {
 };
 
 const audit = async number => {
-
   // Store data about the pull request.
   let data = {
     files: {},
     number
-  };  
+  };
   // Get the files that are affected by the pull request.
-  const files = await octokit.request({
-    method: 'GET',
-    url: `/repos/googlechrome/web.dev/pulls/${number}/files`
-  });
+  let files = [];
+  let response;
+  let page = 1;
+  do {
+    response = await octokit.request({
+      method: 'GET',
+      url: `/repos/googlechrome/web.dev/pulls/${number}/files?page=${page}`
+    });
+    files = files.concat(response.data);
+    page += 1;
+  } while (response.data.length === 30);
   // Check for new content, modified content, or images.
   // TODO(kaycebasques): Refactor to first gather content files. Then filter for modified or added.
   const newContent =
-      files.data.filter(file => file.status === constants.files.added &&
+      files.filter(file => file.status === constants.files.added &&
           file.filename.toLowerCase().endsWith('.md'));
   const modifiedContent =
-      files.data.filter(file => file.status === constants.files.modified &&
+      files.filter(file => file.status === constants.files.modified &&
           file.filename.toLowerCase().endsWith('.md'));
+
   const images =
-      files.data.filter(file => file.filename.toLowerCase().endsWith('.png') ||
+      files.filter(file => file.filename.toLowerCase().endsWith('.png') ||
           file.filename.toLowerCase().endsWith('.jpg'));
   // Bail if the PR doesn't touch any content files.
   if (newContent.length === 0 && modifiedContent.length === 0) return;
