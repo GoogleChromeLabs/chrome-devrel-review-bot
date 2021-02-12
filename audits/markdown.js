@@ -71,7 +71,7 @@ async function audit(url, filename) {
     lines.forEach((line, index) => {
       for (const key in words) {
         if (new RegExp(words[key].pattern).test(line)) {
-          output[key] ? output[key].push(index) : output[key] = [index];
+          output[key] ? output[key].push(index + 1) : output[key] = [index + 1];
         }
       }
     });
