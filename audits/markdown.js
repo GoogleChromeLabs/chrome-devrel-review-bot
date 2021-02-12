@@ -23,6 +23,10 @@ const results = {
   "fenced-code-language": data => {
     data.pass = defaultCheck(data);
     return data;
+  },
+  "words": data => {
+    data.pass = Object.keys(data).length === 0;
+    return data;
   }
 };
 
@@ -42,6 +46,7 @@ function organize(data) {
 
 async function audit(url, filename) {
   const {data} = await axios.get(url);
+  // Lint the Markdown.
   const options = {
     strings: {},
     config: {
@@ -58,6 +63,21 @@ async function audit(url, filename) {
   options.strings[filename] = data;
   let output = linter.sync(options);
   output = organize(output[filename]);
+  // Check for problematic words.
+  function flagWords(data) {
+    const words = require('../words.json');
+    const lines = data.split('\n');
+    const output = {};
+    lines.forEach((line, index) => {
+      for (const key in words) {
+        if (new RegExp(words[key].pattern).test(line)) {
+          output[key] ? output[key].push(index) : output[key] = [index];
+        }
+      }
+    });
+    return output;
+  }
+  output.words = flagWords(data);
   for (const key in output) {
     output[key] = results[key](output[key]);
   }

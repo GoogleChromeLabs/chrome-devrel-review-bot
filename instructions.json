@@ -3,5 +3,6 @@
   "single-trailing-newline": "Please add a single newline character to the end of the file. [Some programs have trouble with files that don't end with a newline](https://unix.stackexchange.com/questions/18743/whats-the-point-in-adding-a-new-line-to-the-end-of-a-file).",
   "heading-increment": "Please increment section headings one level at a time. E.g. don't go from H1 to H3. [Skipping headings can make the structure of the content confusing for people who rely on accessibility technologies](https://www.w3.org/WAI/tutorials/page-structure/headings/).",
   "blanks-around-headings": "Please put a blank line before and after each section heading. Some Markdown parsers don't detect the text as a section heading unless there is blank space before and after it.",
-  "fenced-code-language": "Please specify the language in code blocks so that the code syntax is colored correctly. [Supported languages](https://prismjs.com/#supported-languages)."
+  "fenced-code-language": "Please specify the language in code blocks so that the code syntax is colored correctly. [Supported languages](https://prismjs.com/#supported-languages).",
+  "words": "Please change your usage of the following words:"
 }

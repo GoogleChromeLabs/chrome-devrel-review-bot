@@ -1,0 +1,18 @@
+{
+  "please": {
+    "pattern": "[Pp]lease",
+    "instruction": "[Avoid `please`](https://developers.google.com/style/word-list#please)."
+  },
+  "web": {
+    "pattern": "Web",
+    "instruction": "[Keep `web` lowercase](https://developers.google.com/style/word-list#web). You can ignore this if you're using `Web` at the beginning of a sentence."
+  },
+  "devtools": {
+    "pattern": "[Dd]evtools",
+    "instruction": "Use `DevTools` (capital `D` and `T`) when referring to the developer tools in Safari, Firefox, Chrome, etc."
+  },
+  "javascript": {
+    "pattern": "[Jj]avascript",
+    "instruction": "Use `JavaScript` (capital `J` and `S`)."
+  }
+}

@@ -23,16 +23,14 @@ app.post('/', function(request, response) {
   response.end();
 });
 
-app.get('/', async (request, response) => {
-  response.send('OK');
-});
-
-// TODO(kaycebasques): Only allow this to run while developing.
-// app.get('/:number', async (request, response) => {
-//   const data = await audit(request.params.number);
-//   response.header('Content-Type', 'application/json');
-//   response.send(JSON.stringify(data, null, 2));
-// });
+if (process.env.DEBUG) {
+  app.get('/', async (request, response) => {
+    // Manually pass the PR that you want to test as the argument to audit().
+    const data = await audit(3938);
+    response.header('Content-Type', 'application/json');
+    response.send(JSON.stringify(data, null, 2));
+  });
+}
 
 const listener = app.listen(process.env.PORT, function() {
   console.log(`App is running on http://localhost:${listener.address().port}`);

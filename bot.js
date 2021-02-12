@@ -6,6 +6,7 @@ const markdown = require('./audits/markdown.js');
 // const psi = require('./audits/psi.js');
 // const dom = require('./audits/dom.js');
 const instructions = require('./instructions.json');
+const words = require('./words.json');
 
 // The keys of this object match the names of the relevant GitHub webhook event
 // that we're responding to.
@@ -128,7 +129,15 @@ const audit = async number => {
       for (const key in data.audits.markdown) {
         const audit = data.audits.markdown[key];
         if (!audit.pass) {
-          content += `* ${instructions[key]} Affected lines: ${audit.lines.join(', ')}\n`;
+          if (key === 'words') {
+            content += `* ${instructions[key]}\n`;
+            for (const word in data.audits.markdown[key]) {
+              if (word === 'pass') continue;
+              content += `  * ${words[word].instruction} Affected lines: ${data.audits.markdown[key][word].join(', ')}\n`;
+            }
+          } else {
+            content += `* ${instructions[key]} Affected lines: ${audit.lines.join(', ')}\n`;
+          }
           sentinel = false;
         }
       }
