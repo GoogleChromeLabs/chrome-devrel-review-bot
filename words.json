@@ -1,6 +1,10 @@
 {
+  "blacklist": {
+    "pattern": "blacklist",
+    "instruction": "TODO blacklist"
+  },
   "please": {
-    "pattern": "[Pp]lease",
+    "pattern": "please",
     "instruction": "[Avoid `please`](https://developers.google.com/style/word-list#please)."
   }
 }
