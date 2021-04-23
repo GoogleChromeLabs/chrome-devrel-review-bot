@@ -12,6 +12,9 @@ DEV=true
 PR=…
 ```
 
+Need to add a **new** comment with the text `reviewbot-dev`. Editing the "first comment"
+which is actually the description of the pull request does not work.
+
 ## Overview
 
 This section explains the lifecycle of the bot.

@@ -3,8 +3,6 @@ const { Octokit } = require('@octokit/core');
 const octokit = new Octokit({auth: process.env.GITHUB});
 const constants = require('./constants.json');
 const markdown = require('./audits/markdown.js');
-// const psi = require('./audits/psi.js');
-// const dom = require('./audits/dom.js');
 const instructions = require('./instructions.json');
 const words = require('./words.json');
 
@@ -150,22 +148,32 @@ const audit = async number => {
     for (const path in data.files) {
       comment += createFileContent(path, data.files[path]);
     }
-    comment += `<!-- Comment ID: ${constants.comments.reviewbot} -->`;
+    comment += `<!-- Comment ID: ${constants.comments.reviewbot} -->\n`;
+    if (process.env.DEV) comment += `<!-- ${constants.comments.dev} -->`
     return comment;
   };
 
-  async function updatePullRequest() {
-    // Create the comment if it doesn't exist.
-    if (reviewBotComment.length === 0) {
-      await octokit.request({
-        accept: 'application/vnd.github.v3+json',
-        method: 'POST',
-        url: `/repos/googlechrome/web.dev/issues/${data.number}/comments`,
-        body: createComment(data, shouldShowStagingUrls)
-      });
-    }
-    // Otherwise just update it.
-    if (reviewBotComment.length === 1) {
+  // Check for the auto-generated reviewbot comment.
+  const reviewBotComment = comments.data.filter(comment => {
+    return comment.body.includes(constants.comments.reviewbot);
+  });
+
+  // Create the auto-generated reviewbot comment if it does not yet exist.
+  if (reviewBotComment.length === 0) {
+    await octokit.request({
+      accept: 'application/vnd.github.v3+json',
+      method: 'POST',
+      url: `/repos/googlechrome/web.dev/issues/${data.number}/comments`,
+      body: createComment(data, shouldShowStagingUrls)
+    });
+  }
+
+  // Update the existing comment (under certain conditions) if it already exists.
+  if (reviewBotComment.length === 1) {
+    const dev = reviewBotComment.body.includes(constants.comments.dev);
+    // Only update if the PR is not flagged for reviewbot development/debugging (!dev)
+    // or it is flagged but we're running the development version of reviewbot (dev && process.env.DEV).
+    if (!dev || (dev && process.env.DEV)) {
       await octokit.request({
         accept: 'application/vnd.github.v3+json',
         method: 'PATCH',
@@ -173,36 +181,6 @@ const audit = async number => {
         body: createComment(data, shouldShowStagingUrls)
       });
     }
-  }
-
-  // Check for the auto-generated reviewbot comment.
-  const reviewBotComment = comments.data.filter(comment => {
-    return comment.body.includes(constants.comments.reviewbot);
-  });
-
-  // Check for the auto-generated reviewbot comment.
-  const devComment = comments.data.filter(comment => {
-    return comment.body.includes(constants.comments.dev);
-  }).length > 0;
-
-  if (devComment && !process.env.DEV) {
-    // Do nothing because we have indicated (through devComment)
-    // that we're using this PR for development/debugging. And
-    // since process.env.DEV is false it means this is the production
-    // version of reviewbot. We don't want the production reviewbot
-    // interfering with our development/debugging PR.
-  }
-
-  if (devComment && process.env.DEV) {
-    // It's a dev/debug PR, but we're running the DEV version of reviewbot.
-    // Therefore we should update the PR in order to test our changes.
-    updatePullRequest();
-  }
-
-  if (!devComment) {
-    // It's not a dev/debug PR. The production version of reviewbot
-    // should update the PR.
-    updatePullRequest();
   }
 
   // Return the final data. Only for debugging purposes.
