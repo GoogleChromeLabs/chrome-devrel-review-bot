@@ -2,20 +2,61 @@
 
 Automated reviews of web.dev pull requests.
 
-## Development
+## Deploying
 
-```
-GITHUB=…
-PSI=…
-PORT=8080
-DEV=true
-PR=…
-```
+1. Go to [https://glitch.com/edit/#!/reviewbot](https://glitch.com/edit/#!/reviewbot).
+1. Click **Tools** > **Import and Export** > **Import from GitHub**.
+1. Enter the name of the repository (e.g. `kaycebasques/reviewbot`) and click **OK**.
 
-Need to add a **new** comment with the text `reviewbot-dev`. Editing the "first comment"
-which is actually the description of the pull request does not work.
+Make sure that the Glitch app is
+[boosted](https://glitch.happyfox.com/kb/article/73-boosted-apps-what-s-that/)
+so that it is already running when it receives `POST` messages from GitHub
+and will be able to respond quickly.
 
-## Overview
+## Development/debugging
+
+Follow these instructions if you want to develop/debug reviewbot
+locally.
+
+1. Create a test pull request (PR) that triggers the conditions you
+   want to develop/debug.
+1. Create an `.env` file and add the following values:
+
+       GITHUB=…
+       PSI=…
+       PORT=8080
+       DEV=true
+       PR=…
+
+   `GITHUB` should be the GitHub API key for reviewbot. `PSI` should be
+   reviewbot's PageSpeed Insights API key. The values for `GITHUB` and
+   `PSI` are available on Google's internal system for sharing passwords
+   (search for `reviewbot`). `PR` is the number of the pull request that
+   you want to test.
+
+1. Run `npm run dev`.
+
+1. Navigate to `localhost:8080` (replace `8080` with whatever value
+   you provided for `PORT` in `.env`).
+
+Since reviewbot is a GitHub [webhook] bot, the production version of reviewbot
+really only uses/listens for `POST` messages. Therefore we can use `GET`
+messages for debugging/development purposes. That's what the workflow above
+does. In other words when you load `localhost:8080` from a browser, the `GET`
+listener in `server.js` is triggered. And that listener is purely for
+debugging/development. The `GET` listener basically just audits a single,
+specific PR (the one that you specify in `.env`) and then returns the results as
+JSON. So you can look at the JSON results of the audit in your browser.
+
+Every time that you reload `localhost:8080`, the auto-generated comment that
+gets posted to the GitHub pull request will also get updated. Look for the
+text `THIS IS A DEVELOPMENT BUILD OF REVIEWBOT` to make sure that the comment
+was generated from your development build, not the production build of reviewbot.
+On that note, keep in mind that the production build is always running, so it's
+possible for the production build to interfere with your development build
+if you dramatically change the code.
+
+## Architecture overview
 
 This section explains the lifecycle of the bot.
 
