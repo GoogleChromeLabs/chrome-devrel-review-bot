@@ -1,10 +1,22 @@
 {
   "blacklist": {
-    "pattern": "blacklist",
+    "pattern": "black ?list",
     "instruction": "TODO blacklist"
+  },
+  "master": {
+    "pattern": "master",
+    "instruction": "TODO master"
   },
   "please": {
     "pattern": "please",
     "instruction": "[Avoid `please`](https://developers.google.com/style/word-list#please)."
+  },
+  "slave": {
+    "pattern": "slave",
+    "instruction": "TODO slave"
+  },
+  "whitelist": {
+    "pattern": "white ?list",
+    "instruction": "TODO whitelist"
   }
 }
