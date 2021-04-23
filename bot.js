@@ -170,7 +170,7 @@ const audit = async number => {
 
   // Update the existing comment (under certain conditions) if it already exists.
   if (reviewBotComment.length === 1) {
-    const dev = reviewBotComment.body.includes(constants.comments.dev);
+    const dev = reviewBotComment[0].body.includes(constants.comments.dev);
     // Only update if the PR is not flagged for reviewbot development/debugging (!dev)
     // or it is flagged but we're running the development version of reviewbot (dev && process.env.DEV).
     if (!dev || (dev && process.env.DEV)) {
