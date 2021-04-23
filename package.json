@@ -12,8 +12,7 @@
     "axios": "0.21.0",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "markdownlint": "0.21.1",
-    "puppeteer": "5.4.1"
+    "markdownlint": "0.21.1"
   },
   "engines": {
     "node": "14.x"
