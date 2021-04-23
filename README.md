@@ -2,6 +2,16 @@
 
 Automated reviews of web.dev pull requests.
 
+## Development
+
+```
+GITHUB=…
+PSI=…
+PORT=8080
+DEV=true
+PR=…
+```
+
 ## Overview
 
 This section explains the lifecycle of the bot.

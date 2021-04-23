@@ -23,10 +23,10 @@ app.post('/', function(request, response) {
   response.end();
 });
 
-if (process.env.DEBUG) {
+if (process.env.DEV) {
   app.get('/', async (request, response) => {
     // Manually pass the PR that you want to test as the argument to audit().
-    const data = await audit(3938);
+    const data = await audit(process.env.PR);
     response.header('Content-Type', 'application/json');
     response.send(JSON.stringify(data, null, 2));
   });
