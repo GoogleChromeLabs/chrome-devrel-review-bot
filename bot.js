@@ -17,11 +17,12 @@ const actions = {
   },
   // A new comment was created on the pull request.
   created: data => {
-    // TODO(kaycebasques): Check if it was Netlify and only re-run audit if so.
+    if (!data.issue) return;
     audit(data.issue.number);
   },
   // A comment on the pull request was edited.
   edited: data => {
+    if (!data.issue) return;
     audit(data.issue.number)
   },
   // Some of the code in the pull request changed.
@@ -182,7 +183,7 @@ const audit = async number => {
   // Check for the auto-generated reviewbot comment.
   const devComment = comments.data.filter(comment => {
     return comment.body.includes(constants.comments.dev);
-  });
+  }).length > 0;
 
   if (devComment && !process.env.DEV) {
     // Do nothing because we have indicated (through devComment)
