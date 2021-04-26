@@ -11,25 +11,25 @@ const words = require('./words.json');
 const actions = {
   // Pull request was opened.
   opened: data => {
-    audit(data.number);
+    audit(data.organization, data.repository, data.number);
   },
   // A new comment was created on the pull request.
   created: data => {
     if (!data.issue) return;
-    audit(data.issue.number);
+    audit(data.organization, data.repository, data.number);
   },
   // A comment on the pull request was edited.
   edited: data => {
     if (!data.issue) return;
-    audit(data.issue.number)
+    audit(data.organization, data.repository, data.number);
   },
   // Some of the code in the pull request changed.
   synchronize: data => {
-    audit(data.number);
+    audit(data.organization, data.repository, data.number);
   }
 };
 
-const audit = async number => {
+const audit = async (org, repo, number) => {
   // Store data about the pull request.
   let data = {
     files: {},
@@ -42,7 +42,7 @@ const audit = async number => {
   do {
     response = await octokit.request({
       method: 'GET',
-      url: `/repos/googlechrome/web.dev/pulls/${number}/files?page=${page}`
+      url: `/repos/${org}/${repo}/pulls/${number}/files?page=${page}`
     });
     files = files.concat(response.data);
     page += 1;
@@ -101,7 +101,7 @@ const audit = async number => {
   const comments = await octokit.request({
     accept: 'application/vnd.github.v3+json',
     method: 'GET',
-    url: `/repos/googlechrome/web.dev/issues/${number}/comments`
+    url: `/repos/${org}/${repo}/issues/${number}/comments`
   });
   // Check for the auto-generated staging URLs comment.
   const shouldShowStagingUrls =
@@ -163,7 +163,7 @@ const audit = async number => {
     await octokit.request({
       accept: 'application/vnd.github.v3+json',
       method: 'POST',
-      url: `/repos/googlechrome/web.dev/issues/${data.number}/comments`,
+      url: `/repos/${org}/${repo}/issues/${number}/comments`,
       body: createComment(data, shouldShowStagingUrls)
     });
   }
@@ -177,7 +177,7 @@ const audit = async number => {
       await octokit.request({
         accept: 'application/vnd.github.v3+json',
         method: 'PATCH',
-        url: `/repos/googlechrome/web.dev/issues/comments/${reviewBotComment[0].id}`,
+        url: `/repos/${org}/${repo}/issues/comments/${reviewBotComment[0].id}`,
         body: createComment(data, shouldShowStagingUrls)
       });
     }
