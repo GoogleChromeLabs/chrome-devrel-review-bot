@@ -1,6 +1,6 @@
 # reviewbot
 
-Automated reviews of web.dev pull requests.
+Automated reviews of web.dev/developer.chrome.com pull requests.
 
 ## Deploying
 
