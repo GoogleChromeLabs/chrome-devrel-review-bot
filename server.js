@@ -22,7 +22,6 @@ app.post('/', function(request, response) {
     return;
   }
   actions[action](data);
-  console.log(data.action);
   response.end();
 });
 

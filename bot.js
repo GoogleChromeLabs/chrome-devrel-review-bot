@@ -6,26 +6,26 @@ const markdown = require('./audits/markdown.js');
 const instructions = require('./instructions.json');
 const words = require('./words.json');
 
-// The keys of this object match the names of the relevant GitHub webhook event
+// The keys of this object match the names of the relevant GitHub webhook action
 // that we're responding to.
 const actions = {
   // Pull request was opened.
   opened: data => {
-    audit(data.organization, data.repository, data.number);
+    audit(data.organization.login, data.repository.name, data.number);
   },
   // A new comment was created on the pull request.
   created: data => {
     if (!data.issue) return;
-    audit(data.organization, data.repository, data.number);
+    audit(data.organization.login, data.repository.name, data.issue.number);
   },
-  // A comment on the pull request was edited.
+  // A comment on the pull request or the pull request itself was edited.
   edited: data => {
-    if (!data.issue) return;
-    audit(data.organization, data.repository, data.number);
+    const number = data.issue ? data.issue.number : data.number;
+    audit(data.organization.login, data.repository.name, number);
   },
   // Some of the code in the pull request changed.
   synchronize: data => {
-    audit(data.organization, data.repository, data.number);
+    audit(data.organization.login, data.repository.name, data.number);
   }
 };
 
