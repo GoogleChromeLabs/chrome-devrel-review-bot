@@ -1,6 +1,6 @@
 # reviewbot
 
-Automated reviews of web.dev pull requests.
+Automated reviews of web.dev/developer.chrome.com pull requests.
 
 ## Deploying
 
@@ -27,12 +27,17 @@ locally.
        PORT=8080
        DEV=true
        PR=…
+       ORG=…
+       REPO=…
 
    `GITHUB` should be the GitHub API key for reviewbot. `PSI` should be
    reviewbot's PageSpeed Insights API key. The values for `GITHUB` and
    `PSI` are available on Google's internal system for sharing passwords
    (search for `reviewbot`). `PR` is the number of the pull request that
-   you want to test.
+   you want to test. `ORG` is the organization/user that owns the repository.
+   `REPO` is the repository. For example, given a pull request URL like
+   `https://github.com/googlechrome/web.dev/pull/688`, `googlechrome` is the
+   organization/user, `web.dev` is the repository, and `688` is the pull request number.
 
 1. Run `npm run dev`.
 
