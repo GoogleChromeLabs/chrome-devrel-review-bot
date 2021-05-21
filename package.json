@@ -1,7 +1,7 @@
 {
-  "name": "reviewbot",
+  "name": "chrome-devrel-review-bot",
   "version": "1.0.0",
-  "description": "Automated reviews of web.dev pull requests.",
+  "description": "Automated content reviews of web.dev and developer.chrome.com pull requests.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -18,7 +18,7 @@
     "node": "14.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/reviewbot"
+    "url": "https://github.com/googlechromelabs/chrome-devrel-review-bot"
   },
   "license": "Apache-2.0",
   "devDependencies": {
