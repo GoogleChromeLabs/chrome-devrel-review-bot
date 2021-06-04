@@ -1,6 +1,5 @@
 {
   "comments": {
-    "staging": "Deploy preview for *web-dev-staging* ready!",
     "reviewbot": "reviewbot-automated-comment",
     "dev": "reviewbot-dev"
   },

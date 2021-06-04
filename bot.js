@@ -76,19 +76,11 @@ const audit = async (org, repo, number) => {
   // Bail if the PR doesn't touch any content files.
   if (newContent.length === 0 && modifiedContent.length === 0) return;
 
-  // Function for converting Markdown files that the PR is creating/editing into URLs.
-  const getStagingUrl = (number, path) => {
-    const s1 = path.substring(0, path.lastIndexOf('/'));
-    const s2 = s1.substring(s1.lastIndexOf('/') + 1);
-    return `https://deploy-preview-${number}--web-dev-staging.netlify.app/${s2}/`;
-  };
-
   // Store data about the new or modified content.
   if (newContent.length > 0) {
     newContent.forEach(file => {
       data.files[file.filename] = {
         status: constants.files.added,
-        url: getStagingUrl(number, file.filename),
         raw: file.raw_url,
         audits: {}
       };
@@ -98,7 +90,6 @@ const audit = async (org, repo, number) => {
     modifiedContent.forEach(file => {
       data.files[file.filename] = {
         status: constants.files.modified,
-        url: getStagingUrl(number, file.filename),
         raw: file.raw_url,
         audits: {}
       };
@@ -117,22 +108,9 @@ const audit = async (org, repo, number) => {
     method: 'GET',
     url: `/repos/${org}/${repo}/issues/${number}/comments`
   });
-  // Check for the auto-generated staging URLs comment.
-  const shouldShowStagingUrls =
-      comments.data.filter(comment => comment.body.includes(constants.comments.staging)).length > 0;
-
 
   // Function for creating the automated comment.
-  const createComment = (data, showStagingUrls) => {
-    const createStagingUrlsContent = data => {
-      let comment = '## Staging URLs\n\n';
-      comment += 'For your convenience, here are direct links (on our staging site) to the content you created or updated:\n\n';
-      for (const path in data.files) {
-        const file = data.files[path];
-        comment += `* ${file.url}\n`;
-      }
-      return comment;
-    };
+  const createComment = (data) => {
     const createFileContent = (pathname, data) => {
       let content = `### \`${pathname}\`\n\n`;
       let sentinel = true;
@@ -156,7 +134,6 @@ const audit = async (org, repo, number) => {
     };
     let comment = 'Hello! This is an automated review by our custom [reviewbot](https://github.com/GoogleChromeLabs/reviewbot). It updates automatically when code or GitHub comments in this pull request are created or updated.\n\n';
     if (process.env.DEV) comment += 'THIS IS A DEVELOPMENT BUILD OF REVIEWBOT.\n\n';
-    if (showStagingUrls) comment += createStagingUrlsContent(data);
     comment += '## Requested changes\n\n';
     comment += 'If there are any common problems with the content files you created or modified, they will be listed here.\n\n';
     for (const path in data.files) {
@@ -178,7 +155,7 @@ const audit = async (org, repo, number) => {
       accept: 'application/vnd.github.v3+json',
       method: 'POST',
       url: `/repos/${org}/${repo}/issues/${number}/comments`,
-      body: createComment(data, shouldShowStagingUrls)
+      body: createComment(data)
     });
   }
 
@@ -192,7 +169,7 @@ const audit = async (org, repo, number) => {
         accept: 'application/vnd.github.v3+json',
         method: 'PATCH',
         url: `/repos/${org}/${repo}/issues/comments/${reviewBotComment[0].id}`,
-        body: createComment(data, shouldShowStagingUrls)
+        body: createComment(data)
       });
     }
   }
