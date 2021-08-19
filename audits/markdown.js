@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const axios = require('axios').default;
+const axios = require('axios');
 const linter = require('markdownlint');
 
 const defaultCheck = data => data.lines === 0;
