@@ -54,6 +54,6 @@ if (process.env.DEV) {
   });
 }
 
-const listener = app.listen(process.env.PORT, function() {
+const listener = app.listen(process.env.PORT, () => {
   console.log('reviewbot running on', listener.address());
 });

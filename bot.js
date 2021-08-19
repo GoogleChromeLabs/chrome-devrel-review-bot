@@ -31,7 +31,9 @@ const actions = {
   },
   // A new comment was created on the pull request.
   created: data => {
-    if (!data.issue) return;
+    if (!data.issue) {
+      return;
+    }
     audit(data.organization.login, data.repository.name, data.issue.number);
   },
   // A comment on the pull request or the pull request itself was edited.
@@ -42,7 +44,7 @@ const actions = {
   // Some of the code in the pull request changed.
   synchronize: data => {
     audit(data.organization.login, data.repository.name, data.number);
-  }
+  },
 };
 
 /**
@@ -54,7 +56,7 @@ async function audit(org, repo, number) {
   // Store data about the pull request.
   let data = {
     files: {},
-    number
+    number,
   };
   // Get the files that are affected by the pull request.
   let files = [];
@@ -91,7 +93,7 @@ async function audit(org, repo, number) {
       data.files[file.filename] = {
         status: constants.files.added,
         raw: file.raw_url,
-        audits: {}
+        audits: {},
       };
     });
   }
@@ -100,7 +102,7 @@ async function audit(org, repo, number) {
       data.files[file.filename] = {
         status: constants.files.modified,
         raw: file.raw_url,
-        audits: {}
+        audits: {},
       };
     });
   }
@@ -115,7 +117,7 @@ async function audit(org, repo, number) {
   const comments = await octokit.request({
     accept: 'application/vnd.github.v3+json',
     method: 'GET',
-    url: `/repos/${org}/${repo}/issues/${number}/comments`
+    url: `/repos/${org}/${repo}/issues/${number}/comments`,
   });
 
   // Function for creating the automated comment.
@@ -141,15 +143,19 @@ async function audit(org, repo, number) {
       if (sentinel) content += '* This file passed all of our automated Markdown audits.\n\n';
       return content;
     };
-    let comment = 'Hello! This is an automated review by our custom [reviewbot](https://github.com/GoogleChromeLabs/reviewbot). It updates automatically when code or GitHub comments in this pull request are created or updated.\n\n';
-    if (process.env.DEV) comment += 'THIS IS A DEVELOPMENT BUILD OF REVIEWBOT.\n\n';
+    let comment = 'Hello! This is an automated review by our custom [reviewbot](https://github.com/GoogleChromeLabs/chrome-devrel-review-bot). It updates automatically when code or GitHub comments in this pull request are created or updated.\n\n';
+    if (process.env.DEV) {
+      comment += 'THIS IS A DEVELOPMENT BUILD OF REVIEWBOT.\n\n';
+    }
     comment += '## Requested changes\n\n';
     comment += 'If there are any common problems with the content files you created or modified, they will be listed here.\n\n';
     for (const path in data.files) {
       comment += createFileContent(path, data.files[path]);
     }
     comment += `<!-- Comment ID: ${constants.comments.reviewbot} -->\n`;
-    if (process.env.DEV) comment += `<!-- ${constants.comments.dev} -->`
+    if (process.env.DEV) {
+      comment += `<!-- ${constants.comments.dev} -->`;
+    }
     return comment;
   };
 
@@ -164,7 +170,7 @@ async function audit(org, repo, number) {
       accept: 'application/vnd.github.v3+json',
       method: 'POST',
       url: `/repos/${org}/${repo}/issues/${number}/comments`,
-      body: createComment(data)
+      body: createComment(data),
     });
   }
 
@@ -178,7 +184,7 @@ async function audit(org, repo, number) {
         accept: 'application/vnd.github.v3+json',
         method: 'PATCH',
         url: `/repos/${org}/${repo}/issues/comments/${reviewBotComment[0].id}`,
-        body: createComment(data)
+        body: createComment(data),
       });
     }
   }
@@ -189,5 +195,5 @@ async function audit(org, repo, number) {
 
 module.exports = {
   actions,
-  audit
-}
+  audit,
+};

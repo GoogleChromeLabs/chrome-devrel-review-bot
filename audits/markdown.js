@@ -17,6 +17,7 @@
 const axios = require('axios');
 const linter = require('markdownlint');
 
+/** @type {(data: {lines: number}) => boolean} */
 const defaultCheck = data => data.lines === 0;
 
 const results = {
@@ -52,7 +53,7 @@ function organize(data) {
     const id = violation.ruleNames[1];
     if (!output[id]) {
       output[id] = {
-        lines: []
+        lines: [],
       };
     }
     output[id].lines.push(violation.lineNumber);
@@ -72,7 +73,9 @@ async function audit(url, filename) {
   // They seem to result in _named_ outputs.
   /** @type {linter.Options} */
   const options = {
-    strings: {},
+    strings: {
+      [filename]: data,
+    },
     config: {
       default: false,
       MD001: true,
@@ -82,9 +85,10 @@ async function audit(url, filename) {
       MD047: true // https://unix.stackexchange.com/a/18789/79351
     }
   };
-  options.strings[filename] = data;
+
   let output = linter.sync(options);
   output = organize(output[filename]);
+
   // Check for problematic words.
   function flagWords(data) {
     const words = require('../words.json');
@@ -107,5 +111,5 @@ async function audit(url, filename) {
 }
 
 module.exports = {
-  audit
+  audit,
 };
