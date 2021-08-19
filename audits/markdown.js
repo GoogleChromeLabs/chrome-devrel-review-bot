@@ -1,16 +1,18 @@
-// Copyright 2021 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 const axios = require('axios');
 const linter = require('markdownlint');
@@ -58,17 +60,23 @@ function organize(data) {
   return output;
 }
 
+/**
+ * @param {string} url
+ * @param {string} filename
+ */
 async function audit(url, filename) {
   const {data} = await axios.get(url);
   // Lint the Markdown.
+  // These rules are from markdownlint and documented here:
+  //   https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
+  // They seem to result in _named_ outputs.
+  /** @type {linter.Options} */
   const options = {
     strings: {},
     config: {
       default: false,
       MD001: true,
-      MD013: {
-        line_length: 100
-      },
+      MD013: false, // line length check disabled
       MD022: true,
       MD040: true,
       MD047: true // https://unix.stackexchange.com/a/18789/79351
