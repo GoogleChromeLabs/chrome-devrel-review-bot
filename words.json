@@ -1,102 +1,102 @@
 {
   "adhd": {
-    "pattern": "ADHD",
+    "pattern": "\bADHD\b",
     "instruction": "Do not use [`ADHD`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A14)."
   },
   "blackhat": {
-    "pattern": "black ?hat",
+    "pattern": "\bblack[\s-]*hat\b",
     "instruction": "Do not use [`black hat`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A14)."
   },
   "blacklist": {
-    "pattern": "black ?list",
+    "pattern": "\bblack[\s-]*list\b",
     "instruction": "Do not use [`blacklist`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1101908777&range=A2)."
   },
   "crazy": {
-    "pattern": "crazy",
+    "pattern": "\bcrazy\b",
     "instruction": "Do not use [`crazy`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A23)."
   },
   "finalsolution": {
-    "pattern": "final ?solution",
+    "pattern": "\bfinal ?solution\b",
     "instruction": "Do not use [`final solution`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A31)."
   },
   "girlfriendtest": {
-    "pattern": "girlfriend ?test",
+    "pattern": "\bgirlfriend[\s-]*test\b",
     "instruction": "Do not use [`girlfriend test`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A19)."
   },
   "grandfather": {
-    "pattern": "grandfather",
+    "pattern": "\bgrandfather\b",
     "instruction": "Do not use [`grandfathered` or `grandfathering` (in)](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A18)."
   },
   "grandmatest": {
-    "pattern": "grandma ?test",
+    "pattern": "\bgrandma[\s-]*test\b",
     "instruction": "Do not use [`grandma test`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A19)."
   },
   "sane": {
-    "pattern": "sane",
+    "pattern": "\bsane\b",
     "instruction": "Do not use [`sane` or `insane`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A23)."
   },
   "master": {
-    "pattern": "master",
+    "pattern": "\bmaster\b",
     "instruction": "Do not use [`master`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1101908777&range=A3)."
   },
   "momtest": {
-    "pattern": "mom ?test",
+    "pattern": "\bmom[\s-]*test\b",
     "instruction": "Do not use [`mom test`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A19)."
   },
   "ninja": {
-    "pattern": "ninja",
+    "pattern": "\bninja\b",
     "instruction": "Do not use [`ninja`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A33)."
   },
   "nittygritty": {
-    "pattern": "nitty gritty",
+    "pattern": "\bnitty[\s-]*gritty\b",
     "instruction": "Do not use [`nitty gritty`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A9)."
   },
   "ocd": {
-    "pattern": "OCD",
+    "pattern": "\bOCD\b",
     "instruction": "Do not use [`OCD`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A26)."
   },
   "offthereservation": {
-    "pattern": "off ?the ?reservation",
+    "pattern": "\boff[\s-]*the[\s-]*reservation\b",
     "instruction": "Do not use [`off the reservation`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A5)."
   },
   "please": {
-    "pattern": "please",
+    "pattern": "\bplease\b",
     "instruction": "Avoid [`please`](https://developers.google.com/style/word-list#please)."
   },
   "redline": {
-    "pattern": "redline",
+    "pattern": "\bred[\s-]*line\b",
     "instruction": "Do not use [`redline`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A15)."
   },
   "retard": {
-    "pattern": "retard",
+    "pattern": "\bretard\b",
     "instruction": "Do not use [`retard`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A34)."
   },
   "sanity": {
-    "pattern": "sanity",
+    "pattern": "\bsanity\b",
     "instruction": "Do not use [`sanity check` or `insanity`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1101908777&range=A4)."
   },
   "slave": {
-    "pattern": "slave",
+    "pattern": "\bslave\b",
     "instruction": "Do not use [`slave`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1101908777&range=A4)."
   },
   "tribalknowledge": {
-    "pattern": "tribal knowledge",
+    "pattern": "\btribal[\s-]*knowledge\b",
     "instruction": "Do not use [`tribal knowledge`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A4)."
   },
   "tribe": {
-    "pattern": "tribe",
+    "pattern": "\btribe\b",
     "instruction": "Do not use [`tribe`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A7)."
   },
   "voodoo": {
-    "pattern": "voodoo",
+    "pattern": "\bvoodoo\b",
     "instruction": "Do not use [`voodoo`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A12)."
   },
   "whiteglove": {
-    "pattern": "white ?glove",
+    "pattern": "\bwhite[\s-]*glove\b",
     "instruction": "Do not use [`white glove`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A16)."
   },
   "whitelist": {
-    "pattern": "white ?list",
+    "pattern": "\bwhite[\s-]*list\b",
     "instruction": "Do not use [`whitelist`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1101908777&range=A2)."
   }
 }
