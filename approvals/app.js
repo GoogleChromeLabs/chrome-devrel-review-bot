@@ -6,9 +6,9 @@ module.exports = (app) => {
     const startTime = new Date();
     let result = {
       status: 'completed',
-      conclusion: 'failure',
+      conclusion: 'success',
       output: {
-        title: 'Approvals failed',
+        title: 'Approvals failed 444',
         summary: `All required approvals are granted`
       }
     };
