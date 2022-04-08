@@ -12,7 +12,12 @@
     "axios": "0.21.0",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "markdownlint": "0.21.1"
+    "markdownlint": "0.21.1",
+    "fast-glob": "^3.2.11",
+    "micromatch": "^4.0.5",
+    "node-fetch": "2.6.7",
+    "probot": "^12.2.2",
+    "yaml": "^2.0.0"
   },
   "engines": {
     "node": "14.x"
@@ -26,6 +31,8 @@
     "@types/express": "^4.17.13",
     "@types/markdownlint": "^0.18.0",
     "@types/node": "^16.6.2",
-    "nodemon": "2.0.6"
+    "nodemon": "2.0.6",
+    "jest": "^26.6.3",
+    "nock": "^13.0.5"
   }
 }

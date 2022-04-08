@@ -22,6 +22,13 @@ const {actions, audit} = require('./bot.js');
 
 app.use(express.json());
 
+const { createNodeMiddleware, createProbot, Probot } = require("probot");
+const approvals = require("./approvals/app");
+
+exports.helloWorld = functions.https.onRequest(createNodeMiddleware(approvals, { probot: createProbot() }));
+
+app.post('/approvals', createNodeMiddleware(app, { probot }));
+
 // Listen for issue_comment [1] and pull_request [2] events.
 // [1] https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#issue_comment
 // [2] https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#pull_request
