@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "npx nodemon server.js;"
+    "dev": "npx nodemon server.js;",
+    "test": "jest",
+    "send_event": "node_modules/.bin/probot receive -e pull_request -p ./test/approvals/fixtures/pull_request.edited.json ./approvals/app.js"
   },
   "dependencies": {
     "@octokit/core": "3.2.4",
@@ -32,8 +34,8 @@
     "@types/express": "^4.17.13",
     "@types/markdownlint": "^0.18.0",
     "@types/node": "^16.6.2",
-    "nodemon": "2.0.6",
     "jest": "^26.6.3",
-    "nock": "^13.0.5"
+    "nock": "^13.2.4",
+    "nodemon": "2.0.6"
   }
 }
