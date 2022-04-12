@@ -29,9 +29,6 @@ const CHECK_RESULTS = {
     title: 'Approvals missing',
     summary: 'At least one approving review is required'
   },
-  no_approvals: {
-
-  },
   no_config: {
     conclusion: 'cancelled',
     title: 'Missing config file',
@@ -75,11 +72,11 @@ module.exports = (app) => {
     };
   }
 
-  async function getFiles(octokit, checkOptions, pull_number) {
+  async function getFiles(octokit, checkOptions, pullNumber) {
     const filesRequest = await octokit.rest.pulls.listFiles({
       owner: checkOptions.owner,
       repo: checkOptions.repo,
-      pull_number,
+      pull_number: pullNumber,
     });
     if (!filesRequest.status === 200) {
       result = createCompletedResult(CHECK_RESULTS.no_files);
@@ -89,11 +86,11 @@ module.exports = (app) => {
     return filesRequest.data;
   }
 
-  async function getReviews(octokit, checkOptions, pull_number) {
+  async function getReviews(octokit, checkOptions, pullNumber) {
     const reviewsRequest = await octokit.rest.pulls.listReviews({
       owner: checkOptions.owner,
       repo: checkOptions.repo,
-      pull_number,
+      pull_number: pullNumber,
     });
     if (!reviewsRequest.status === 200) {
       result = createCompletedResult(CHECK_RESULTS.approval_missing);
@@ -105,16 +102,16 @@ module.exports = (app) => {
 
   async function checkPR(context) {
     const startTime = new Date();
-    const pull_request = context.payload.pull_request;
-    if (pull_request.state !== 'open' || pull_request.draft) {
+    const pullRequest = context.payload.pull_request;
+    if (pullRequest.state !== 'open' || pullRequest.draft) {
       return;
     }
 
     const octokit = context.octokit;
-    const headSha = pull_request.head.sha;
+    const headSha = pullRequest.head.sha;
     const owner = context.payload.repository.full_name.split('/')[0];
     const repo = context.payload.repository.name;
-    const pull_number = pull_request.number;
+    const pullNumber = pullRequest.number;
     let result;
 
     const checkOptions = {
@@ -141,14 +138,14 @@ module.exports = (app) => {
     }
 
     // Get PR files
-    const files = await getFiles(octokit, checkOptions, pull_number);
+    const files = await getFiles(octokit, checkOptions, pullNumber);
     if (!files) {
       return;
     }
     const paths = files.map(file => file.filename);
 
     // Get PR reviews
-    const reviews = await getReviews(octokit, checkOptions, pull_number);
+    const reviews = await getReviews(octokit, checkOptions, pullNumber);
     if (!reviews) {
       return;
     }
