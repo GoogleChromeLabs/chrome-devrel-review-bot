@@ -159,20 +159,19 @@ module.exports = (app) => {
       return await createCheck(octokit, checkOptions, result);
     }
 
-    result = createCompletedResult(CHECK_RESULTS.success);
-
     for (const check of config.pr_checks.approvals) {
       const isCheckRequired = micromatch(paths, check.paths, {'dot': true}).length > 0;
       if (isCheckRequired) {
-        const checkApprovers = new Set(check.users);
-        const isApproved = approvers.filter(login => checkApprovers.has(login)).length > 0;
+        const isApproved = approvers.some(login => check.users.includes(login));
         if (!isApproved) {
           result = createCompletedResult(CHECK_RESULTS.approval_missing);
           result.output.summary = `${check.check_name} failed`;
-          break;
+          return await createCheck(octokit, checkOptions, result);
         }
       }
     }
+
+    result = createCompletedResult(CHECK_RESULTS.success);
     return await createCheck(octokit, checkOptions, result);
   }
 };
