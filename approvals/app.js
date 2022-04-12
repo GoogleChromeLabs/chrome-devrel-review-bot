@@ -35,8 +35,7 @@ const CHECK_RESULTS = {
   no_config: {
     conclusion: 'cancelled',
     title: 'Missing config file',
-    summary: '.github/chrome-devrel-bot.yml file does not exist'
-
+    summary: 'The config file does not exist'
   },
   no_files: {
     conclusion: 'cancelled',
