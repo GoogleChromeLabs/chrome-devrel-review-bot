@@ -29,8 +29,8 @@ describe('Approvals', () => {
 
     // Mock Github requests
     nock('https://raw.githubusercontent.com')
-      .get('/devnook/developer.chrome.com/main/.github/chrome-devrel-bot.yml')
-      .replyWithFile(200, __dirname + '/fixtures/config.yml')
+      .get('/devnook/developer.chrome.com/main/.github/chrome-devrel-bot.json')
+      .replyWithFile(200, __dirname + '/fixtures/config.json')
 
     mock = nock('https://api.github.com')
       .post('/app/installations/24733797/access_tokens')

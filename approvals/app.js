@@ -16,7 +16,6 @@
 
 const micromatch = require('micromatch');
 const fetch = require('node-fetch');
-const YAML = require('yaml');
 
 const CHECK_RESULTS = {
   success: {
@@ -126,12 +125,12 @@ module.exports = (app) => {
     };
 
     // Get Config file
-    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/.github/chrome-devrel-bot.yml`;
+    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/.github/chrome-devrel-bot.json`;
     const response = await fetch(url);
     let config;
     if (response.ok) {
       const body = await response.text();
-      config = YAML.parse(body);
+      config = JSON.parse(body);
     } else {
       result = createCompletedResult(CHECK_RESULTS.no_config);
       return await createCheck(octokit, checkOptions, result);
@@ -149,9 +148,12 @@ module.exports = (app) => {
     if (!reviews) {
       return;
     }
-    const approvers = reviews.map(review => {
-      return review.state === "APPROVED" ? review.user.login : false;
-    }).filter(approver => !!approver);
+    const approvers = [];
+    for (const review of reviews) {
+      if (review.state === 'APPROVED') {
+        approvers.push(review.user.login);
+      }
+    }
     if (!approvers.length) {
       result = createCompletedResult(CHECK_RESULTS.approval_missing);
       return await createCheck(octokit, checkOptions, result);
