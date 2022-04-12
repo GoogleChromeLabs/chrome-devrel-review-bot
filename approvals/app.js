@@ -78,10 +78,10 @@ module.exports = (app) => {
       repo: checkOptions.repo,
       pull_number: pullNumber,
     });
-    if (!filesRequest.status === 200) {
+    if (filesRequest.status !== 200) {
       result = createCompletedResult(CHECK_RESULTS.no_files);
       await createCheck(octokit, checkOptions, result);
-      return false;
+      return null;
     }
     return filesRequest.data;
   }
@@ -92,10 +92,10 @@ module.exports = (app) => {
       repo: checkOptions.repo,
       pull_number: pullNumber,
     });
-    if (!reviewsRequest.status === 200) {
+    if (reviewsRequest.status !== 200) {
       result = createCompletedResult(CHECK_RESULTS.approval_missing);
       await createCheck(octokit, checkOptions, result);
-      return false;
+      return null;
     }
     return reviewsRequest.data;
   }
@@ -118,7 +118,7 @@ module.exports = (app) => {
       headers: {
         accept: "application/vnd.github.v3+json"
       },
-      name: "Chrome Devrel PR checks",
+      name: "Chrome DevRel PR checks",
       started_at: startTime,
       head_sha: headSha,
       owner,
