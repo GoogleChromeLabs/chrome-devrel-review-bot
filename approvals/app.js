@@ -15,9 +15,9 @@
  */
 
 const micromatch = require('micromatch');
-const fetch = require('node-fetch');
+const axios = require('axios');
 
-const CONFIG_FILE = 'chrome-devrel-bot.json';
+const CONFIG_FILE = '.github/chrome-devrel-bot.json';
 
 const CHECK_RESULTS = {
   success: {
@@ -163,16 +163,13 @@ module.exports = (app) => {
     };
 
     // Get Config file
-    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/.github/${CONFIG_FILE}`;
-    const response = await fetch(url);
-    let config;
-    if (response.ok) {
-      const body = await response.text();
-      config = JSON.parse(body);
-    } else {
+    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${CONFIG_FILE}`;
+    const response = await axios.get(url);
+    if (response.status !== 200) {
       result = createCompletedResult(CHECK_RESULTS.no_config);
       return await createCheck(octokit, checkOptions, result);
     }
+    const config = response.data;
 
     // Get PR files
     const files = await getFiles(octokit, checkOptions, pullNumber);

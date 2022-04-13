@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const nock = require('nock');
+const axios = require('axios');
 // Requiring our app implementation
 const Approvals = require('../../approvals/app');
 const { Probot, ProbotOctokit } = require('probot');
@@ -10,6 +11,8 @@ const checkRunSuccess = require('./fixtures/check_run.success');
 const checkRunNoApprovals = require('./fixtures/check_run.no_approvals');
 const checkRunApprovalMissing = require('./fixtures/check_run.approval_missing');
 
+// Configure Axios to use Node adapter (@see https://github.com/nock/nock#axios)
+axios.defaults.adapter = require('axios/lib/adapters/http');
 
 const privateKey = fs.readFileSync(
   path.join(__dirname, 'fixtures/mock-cert.pem'),
