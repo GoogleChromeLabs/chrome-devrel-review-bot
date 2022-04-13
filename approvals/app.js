@@ -17,6 +17,8 @@
 const micromatch = require('micromatch');
 const fetch = require('node-fetch');
 
+const CONFIG_FILE = 'chrome-devrel-bot.json';
+
 const CHECK_RESULTS = {
   success: {
     conclusion: 'success',
@@ -53,6 +55,20 @@ module.exports = (app) => {
     'pull_request.edited',
   ], checkPR);
 
+  /**
+   * @param {import('probot').ProbotOctokit} octokit Github's lib instance.
+   * @param {Object} checkOptions Values to be set on the createCheck call.
+   * @param {Object} checkOptions.headers Key-value pairs to be set as headers for the HTTP call.
+   * @param {string} checkOptions.name Name of the check.
+   * @param {Date} checkOptions.started_at Date when the check started.
+   * @param {string} checkOptions.head_sha HeadSha property of the target PR.
+   * @param {string} checkOptions.owner ID of the owner of the Github's repo
+   * @param {string} checkOptions.repo ID of the Github's repo.
+   * @param {Object} result Result of the check.
+   * @param {string} conclusion Outcome of teh check, e.g. 'success' or 'failure'.
+   * @param {string} title Title to be displayed on the check in Github.
+   * @param {string} summary Summary to be displayed on the check in Github.
+   */
   async function createCheck(octokit, checkOptions, result) {
     return await octokit.checks.create({
       ...checkOptions,
@@ -71,6 +87,17 @@ module.exports = (app) => {
     };
   }
 
+  /**
+   * @param {import('probot').ProbotOctokit} octokit Github's lib instance.
+   * @param {Object} checkOptions Values to be set on the createCheck call.
+   * @param {Object} checkOptions.headers Key-value pairs to be set as headers for the HTTP call.
+   * @param {string} checkOptions.name Name of the check.
+   * @param {Date} checkOptions.started_at Date when the check started.
+   * @param {string} checkOptions.head_sha HeadSha property of the target PR.
+   * @param {string} checkOptions.owner ID of the owner of the Github's repo
+   * @param {string} checkOptions.repo ID of the Github's repo.
+   * @param {Number} pullNumber Number of the target pull request
+   */
   async function getFiles(octokit, checkOptions, pullNumber) {
     const filesRequest = await octokit.rest.pulls.listFiles({
       owner: checkOptions.owner,
@@ -85,6 +112,17 @@ module.exports = (app) => {
     return filesRequest.data;
   }
 
+  /**
+   * @param {import('probot').ProbotOctokit} octokit Github's lib instance.
+   * @param {Object} checkOptions Values to be set on the createCheck call.
+   * @param {Object} checkOptions.headers Key-value pairs to be set as headers for the HTTP call.
+   * @param {string} checkOptions.name Name of the check.
+   * @param {Date} checkOptions.started_at Date when the check started.
+   * @param {string} checkOptions.head_sha HeadSha property of the target PR.
+   * @param {string} checkOptions.owner ID of the owner of the Github's repo
+   * @param {string} checkOptions.repo ID of the Github's repo.
+   * @param {Number} pullNumber Number of the target pull request
+   */
   async function getReviews(octokit, checkOptions, pullNumber) {
     const reviewsRequest = await octokit.rest.pulls.listReviews({
       owner: checkOptions.owner,
@@ -125,7 +163,7 @@ module.exports = (app) => {
     };
 
     // Get Config file
-    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/.github/chrome-devrel-bot.json`;
+    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/.github/${CONFIG_FILE}`;
     const response = await fetch(url);
     let config;
     if (response.ok) {
