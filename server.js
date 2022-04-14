@@ -22,6 +22,19 @@ const {actions, audit} = require('./bot.js');
 
 app.use(express.json());
 
+const { createProbot } = require("probot");
+const approvals = require("./approvals/app");
+const probot = createProbot();
+
+app.post('/approvals', async function(request, response) {
+  await probot.load(approvals);
+  probot.webhooks.receive({
+    name: request.headers['x-github-event'],
+    payload: request.body
+  });
+  response.send(200);
+});
+
 // Listen for issue_comment [1] and pull_request [2] events.
 // [1] https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#issue_comment
 // [2] https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#pull_request
