@@ -195,7 +195,7 @@ module.exports = (app) => {
     }
 
     for (const check of config.pr_checks.approvals) {
-      const isCheckRequired = micromatch(paths, check.paths, {'dot': true}).length > 0;
+      const isCheckRequired = micromatch.some(paths, check.paths, {'dot': true});
       if (isCheckRequired) {
         const isApproved = approvers.some(login => check.users.includes(login));
         if (!isApproved) {
