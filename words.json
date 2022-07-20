@@ -1,6 +1,6 @@
 {
   "adhd": {
-    "pattern": "ADHD",
+    "pattern": "\bADHD\b",
     "instruction": "Do not use [`ADHD`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A14)."
   },
   "blackhat": {
@@ -52,7 +52,7 @@
     "instruction": "Do not use [`nitty gritty`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A9)."
   },
   "ocd": {
-    "pattern": "OCD",
+    "pattern": "\bOCD\b",
     "instruction": "Do not use [`OCD`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A26)."
   },
   "offthereservation": {
