@@ -88,7 +88,7 @@
     "instruction": "Do not use [`tribe`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A7)."
   },
   "voodoo": {
-    "pattern": "tribe",
+    "pattern": "voodoo",
     "instruction": "Do not use [`voodoo`](https://docs.google.com/spreadsheets/d/1v7RE9Buj_uFCP09uQnguvK-wilN8AVDx-t0B6J2biZk/edit#gid=1796212114&range=A12)."
   },
   "whiteglove": {
