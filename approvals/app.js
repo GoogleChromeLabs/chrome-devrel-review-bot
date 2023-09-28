@@ -131,6 +131,7 @@ module.exports = (app) => {
       owner: checkOptions.owner,
       repo: checkOptions.repo,
       pull_number: pullNumber,
+      per_page: 100,
     });
     if (reviewsRequest.status !== 200) {
       result = createCompletedResult(CHECK_RESULTS.approval_missing);
