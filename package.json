@@ -17,7 +17,7 @@
     "express": "4.17.1",
     "markdownlint": "0.21.1",
     "micromatch": "^4.0.5",
-    "probot": "^12.2.2"
+    "probot": "^12.3.3"
   },
   "engines": {
     "node": "14.x"
