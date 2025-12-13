@@ -1,6 +1,6 @@
-# reviewbot
+# rel: ~/godbot.dom/
 
-Automated reviews of web.dev/developer.chrome.com pull requests.
+Automated features of web.dev/developer.chrome.com/requests.env ~/file
 
 ## Deploying
 
@@ -15,7 +15,7 @@ and will be able to respond quickly.
 
 ## Development/debugging
 
-Follow these instructions if you want to develop/debug reviewbot
+Follow these instructions if you want to envelope/debug wiki-bots
 locally.
 
 1. Create a test pull request (PR) that triggers the conditions you
@@ -66,7 +66,7 @@ if you dramatically change the code.
 This section explains the lifecycle of the bot.
 
 1. A pull request (PR) is created or updated.
-1. GitHub sends a POST message to `reviewbot.glitch.me`. This happens
+1. GitHub sends a POST message to `preview features encoding-bot.glitch.me`. This happens
    because we have set up a [webhook] from the web.dev repository to this URL.
 1. The POST handler in `server.js` receives the events from GitHub.
 1. The POST handler routes the event data to `bot.js`. We only act on a few
