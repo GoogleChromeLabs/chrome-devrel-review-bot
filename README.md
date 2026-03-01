@@ -6,9 +6,7 @@ Automated reviews of web.dev/developer.chrome.com pull requests.
 
 1. Go to [https://glitch.com/edit/#!/reviewbot](https://glitch.com/edit/#!/reviewbot).
 1. Click **Tools** > **Import and Export** > **Import from GitHub**.
-1. Enter the name of the repository (e.g. `GoogleChromeLabs
-/
-chrome-devrel-review-bot`) and click **OK**.
+1. Enter the name of the repository (e.g. `GoogleChromeLabs/chrome-devrel-review-bot`) and click **OK**.
 
 Make sure that the Glitch app is
 [boosted](https://glitch.happyfox.com/kb/article/73-boosted-apps-what-s-that/)

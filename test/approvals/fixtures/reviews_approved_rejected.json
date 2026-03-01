@@ -1,0 +1,28 @@
+[
+  {
+    "id": 891219807,
+    "user": {
+      "login": "jeffposnick",
+      "type": "User",
+      "site_admin": false
+    },
+    "state": "REJECTED",
+    "pull_request_url": "https://api.github.com/repos/GoogleChrome/developer.chrome.com/pulls/2167",
+    "author_association": "CONTRIBUTOR",
+    "submitted_at": "2022-02-23T15:05:43Z",
+    "commit_id": "40f530485921f68047e2c06baf03071230fbb6ca"
+  },
+  {
+    "id": 891219803,
+    "user": {
+      "login": "devnook",
+      "type": "User",
+      "site_admin": false
+    },
+    "state": "APPROVED",
+    "pull_request_url": "https://api.github.com/repos/GoogleChrome/developer.chrome.com/pulls/2167",
+    "author_association": "CONTRIBUTOR",
+    "submitted_at": "2022-02-23T15:05:43Z",
+    "commit_id": "40f530485921f68047e2c06baf03071230fbb6ca"
+  }
+]
